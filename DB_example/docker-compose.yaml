@@ -1,14 +1,15 @@
-version: ‘3.8’
+version: '3.8'
 
 services:
   postgres:
-    image: 'postgres:15'
+    container_name: 'DB_Container'
+    image: 'postgres:latest'
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
       - ./PostgresData:/var/lib/postgresql
       - ./Scripts:/docker-entrypoint-initdb.d/
-    entrypoint: bash "/docker-entrypoint-initdb.d/init.sh"
+    #entrypoint: bash "/docker-entrypoint-initdb.d/init.sh"
     environment:
       POSTGRES_DB: 'POSTGRES_DB'
       POSTGRES_USER: 'USER'
