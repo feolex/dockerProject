@@ -1,8 +1,27 @@
 #!/bin/bash
 
-cd ./docker-entrypoint-initdb.d/initialMigration
+cd ./initialMigration
 
-#chmod +rx $PWD/example_how_call_another_scripts.sh
-#$PWD/example_how_call_another_scripts.sh
+latest_version=1.0.1
 
-echo "$TAXCAR_DB_VERSION" | awk 'OFS'
+if [ -z "$TAXCAR_DB_VERSION" ]
+  then need_version=$latest_version
+fi
+major_version=$(echo "$TAXCAR_DB_VERSION" | awk -F'.' '{print $1}')
+minor_version=$(echo "$TAXCAR_DB_VERSION" | awk -F'.' '{print $2}')
+patch_version=$(echo "$TAXCAR_DB_VERSION" | awk -F'.' '{print $3}')
+
+export need_version="$major_version.$minor_version.$patch_version"
+echo "Need version to migrate: $need_version"
+if [ -d "$need_version" ]
+ then
+  cd ./$need_version
+  if [ -f start.sh ]
+  then
+      echo "PWD=$PWD"
+      chmod +rx $PWD/start.sh
+      $PWD/start.sh
+  else echo "Start.sh doesn't exist!"; exit 2
+  fi
+  else echo "This directory doen't exist!"; exit 1
+fi

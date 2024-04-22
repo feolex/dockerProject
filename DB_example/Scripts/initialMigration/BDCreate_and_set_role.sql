@@ -1,0 +1,8 @@
+CREATE ROLE usual_creator WITH
+    NOSUPERUSER
+    CREATEDB
+    NOCREATEROLE
+    INHERIT
+    LOGIN;
+
+SET ROLE usual_creator;
