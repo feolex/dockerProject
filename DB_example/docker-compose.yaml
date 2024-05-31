@@ -3,15 +3,37 @@ version: '3.8'
 services:
   postgres:
     container_name: 'DB_Container'
-    image: 'postgres:latest'
+    image: 'postgres:16.0'
+#    cpus: '6'
+    mem_reservation: 5GB
     ports:
       - "5432:5432"
     volumes:
-      - ./PostgresData:/var/lib/postgresql
-      - ./Scripts:/docker-entrypoint-initdb.d/
-    #entrypoint: bash "/docker-entrypoint-initdb.d/init.sh"
+      - pg_data:/var/lib/postgresql
+      - ./Scripts/init.sh:/docker-entrypoint-initdb.d/init.sh
+      - ./Scripts/initialMigration:/docker-entrypoint-initdb.d/initialMigration
+    command: |
+      postgres
+      -c wal_level=minimal
+      -c archive_mode=off
+      -c max_wal_senders=0
+      -c max_wal_size=10GB
+      -c min_wal_size=5GB
+    ##      -c wal_buffers=64MB
     environment:
       POSTGRES_DB: 'POSTGRES_DB'
       POSTGRES_USER: 'USER'
       POSTGRES_PASSWORD: 'PASS'
-      TAXCAR_DB_VERSION: '1.0.0'
+      TAXCAR_DB_VERSION: '1.0.1'
+
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '6.00'
+#          memory: 10GB
+#        reservations:
+#          cpus: '4.00'
+#          memory: 5GB
+
+volumes:
+  pg_data:
