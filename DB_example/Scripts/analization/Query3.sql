@@ -1,0 +1,6 @@
+EXPLAIN ANALYZE
+SELECT ID_user
+FROM taxcar."Order" as ord
+GROUP BY ID_user
+ORDER BY COUNT(ID_order) DESC
+LIMIT 1;
