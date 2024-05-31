@@ -7,4 +7,4 @@ SELECT
     (SELECT ID_mode FROM taxcar.Mode ORDER BY RANDOM() LIMIT 1),
     (SELECT ID_status FROM taxcar.Status ORDER BY RANDOM() LIMIT 1)
 FROM
-    generate_series(1, 100000) AS gs;
+    generate_series(1, 1000000) AS gs;
