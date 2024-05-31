@@ -12,6 +12,7 @@ services:
       - pg_data:/var/lib/postgresql
       - ./Scripts/init.sh:/docker-entrypoint-initdb.d/init.sh
       - ./Scripts/initialMigration:/docker-entrypoint-initdb.d/initialMigration
+      - ./Scripts/analization:/docker-entrypoint-initdb.d/analization
     command: |
       postgres
       -c wal_level=minimal
