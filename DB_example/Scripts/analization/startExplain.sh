@@ -19,7 +19,7 @@ do
   echo "Query${j} Results: ">>$fileLogName
 
   times_array=()
-  for ((i = 1; i <= 5; i++))
+  for ((i = 1; i <= 10; i++))
   do
       output="$(psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -f Query${j}.sql)"
       exec_time=$( echo "$output" | tail -n 2 | head -n 1 | awk '{ print $3 }' )
