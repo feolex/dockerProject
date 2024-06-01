@@ -17,6 +17,13 @@ psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -f $path/BDCreateShema.sql
 echo "Start creating DB"
 #Init database - create main schema taxcar, all tables(if not exists), add indexes,
 psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -f $path/BDSheme_create_tables.sql
+
+##Add additional indexes
+psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -f $path/BDSheme_add_additional_indexes.sql
+
+#Add partitions
+psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -f $path/BDSheme_add_partitions.sql
+
 echo "End creating DB"
 
 echo "Start migration"

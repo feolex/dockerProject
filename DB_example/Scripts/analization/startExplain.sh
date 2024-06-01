@@ -57,7 +57,7 @@ do
     rm sorted_numbers.temp
 
   echo "best_result: $lowest">>$fileLogName
-  echo "worst_result: $highest">>$fileLogName
   echo "average_result: $average">>$fileLogName
+  echo "worst_result: $highest">>$fileLogName
   echo "$LINE">>$fileLogName
 done
